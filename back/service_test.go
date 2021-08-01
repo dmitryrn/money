@@ -10,8 +10,11 @@ func TestService_NewTx(t *testing.T) {
 	s := Service{}
 
 	debitCard := Account{
-		ID:      1,
-		Balance: decimal.RequireFromString("100"),
+		ID: 1,
+		IdLessAccount: IdLessAccount{
+			Name:    "Debit card",
+			Balance: decimal.RequireFromString("100"),
+		},
 	}
 	groceriesCategory := Category{
 		ID:                1,
@@ -53,13 +56,19 @@ func TestService_UpdateTx(t *testing.T) {
 		}
 
 		debitCard := &Account{
-			ID:      1,
-			Balance: decimal.RequireFromString("90"),
+			ID: 1,
+			IdLessAccount: IdLessAccount{
+				Name:    "Debit card",
+				Balance: decimal.RequireFromString("90"),
+			},
 		}
 
 		creditCard := &Account{
-			ID:      2,
-			Balance: decimal.RequireFromString("100"),
+			ID: 2,
+			IdLessAccount: IdLessAccount{
+				Name:    "Credit card",
+				Balance: decimal.RequireFromString("100"),
+			},
 		}
 
 		tx, debitCard, creditCard, category, category = s.UpdateTx(tx, tx.Sum, debitCard, creditCard, category, category)
@@ -107,8 +116,11 @@ func TestService_UpdateTx(t *testing.T) {
 		}
 
 		account := &Account{
-			ID:      1,
-			Balance: decimal.RequireFromString("90"),
+			ID: 1,
+			IdLessAccount: IdLessAccount{
+				Name:    "account",
+				Balance: decimal.RequireFromString("90"),
+			},
 		}
 
 		tx, account, account, groceries, restaurants = s.UpdateTx(tx, tx.Sum, account, account, groceries, restaurants)
@@ -155,15 +167,21 @@ func TestService_UpdateTx(t *testing.T) {
 		}
 
 		account := &Account{
-			ID:      1,
-			Balance: decimal.RequireFromString("90"),
+			ID: 1,
+			IdLessAccount: IdLessAccount{
+				Name:    "account",
+				Balance: decimal.RequireFromString("90"),
+			},
 		}
 
 		tx, account, account, category, category = s.UpdateTx(tx, decimal.RequireFromString("-15"), account, account, category, category)
 
 		assert.Equal(t, Account{
-			ID:      1,
-			Balance: decimal.RequireFromString("85"),
+			ID: 1,
+			IdLessAccount: IdLessAccount{
+				Name:    "account",
+				Balance: decimal.RequireFromString("85"),
+			},
 		}, *account)
 
 		assert.Equal(t, Category{
@@ -200,8 +218,11 @@ func TestService_revertTx(t *testing.T) {
 		},
 	}
 	account := Account{
-		ID:      1,
-		Balance: decimal.RequireFromString("90"),
+		ID: 1,
+		IdLessAccount: IdLessAccount{
+			Name:    "account",
+			Balance: decimal.RequireFromString("90"),
+		},
 	}
 	category := Category{
 		ID:                1,
