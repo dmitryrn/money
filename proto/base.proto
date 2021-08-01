@@ -1,0 +1,70 @@
+syntax = "proto3";
+option go_package = "github.com/dmitryrn/money-proto";
+
+message Transaction {
+  uint64 id = 1;
+  string sum = 2;
+  uint64 accountID = 3;
+  uint64 categoryID = 4;
+}
+
+message Account {
+  uint64 id = 1;
+  string name = 2;
+  string balance = 3;
+}
+
+message Category {
+  uint64 id = 1;
+  string name = 2;
+  string budgeted = 3;
+}
+
+message GetAccountsRequest {
+}
+
+message GetAccountsResponse {
+  repeated Account accounts = 1;
+}
+
+message GetCategoriesRequest {
+}
+
+message GetCategoriesResponse {
+  repeated Category categories = 1;
+}
+
+message CreateAccountRequest {
+  string name = 1;
+  string balance = 2;
+}
+
+message CreateAccountResponse {
+  Account account = 1;
+}
+
+message CreateCategoryRequest {
+  string name = 1;
+}
+
+message CreateCategoryResponse {
+  Category category = 1;
+}
+
+message CreateTransactionRequest {
+  string sum = 1;
+  uint64 accountID = 2;
+  uint64 categoryID = 3;
+}
+
+message CreateTransactionResponse {
+  Transaction transaction = 1;
+}
+
+service BudgetingApp {
+  rpc GetAccounts(GetAccountsRequest) returns (GetAccountsResponse);
+  rpc GetCategories(GetCategoriesRequest) returns (GetCategoriesResponse);
+  rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
+  rpc CreateCategory(CreateCategoryRequest) returns (CreateCategoryResponse);
+  rpc CreateTransaction(CreateTransactionRequest) returns (CreateTransactionResponse);
+}

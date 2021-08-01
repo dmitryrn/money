@@ -7,6 +7,7 @@ import (
 
 var (
 	ErrNegativeNewAccountBalance = errors.New("new account balance can not be negative")
+	ErrBlankNewCategoryName      = errors.New("new category name can not be blank")
 )
 
 type (
@@ -31,10 +32,14 @@ type (
 		IdLessTx
 	}
 
-	Category struct {
-		ID                uint64          `json:"id"`
+	IdLessCategory struct {
 		Name              string          `json:"name"`
 		AvailableForSpend decimal.Decimal `json:"available_for_spend"`
+	}
+
+	Category struct {
+		ID uint64 `json:"id"`
+		IdLessCategory
 	}
 )
 
@@ -50,7 +55,7 @@ func (s *Service) NewTx(
 	Account,
 	Category,
 ) {
-	newTx := IdLessTx{
+	tx := IdLessTx{
 		Sum:        sum,
 		AccountID:  account.ID,
 		CategoryID: category.ID,
@@ -59,7 +64,7 @@ func (s *Service) NewTx(
 	account.Balance = account.Balance.Add(sum)
 	category.AvailableForSpend = category.AvailableForSpend.Add(sum)
 
-	return newTx, account, category
+	return tx, account, category
 }
 
 func (s *Service) UpdateTx(
@@ -140,4 +145,20 @@ func (s *Service) NewAccount(
 	availableForBudgetingCategory.AvailableForSpend = availableForBudgetingCategory.AvailableForSpend.Add(balance)
 
 	return account, availableForBudgetingCategory, nil
+}
+
+func (s *Service) NewCategory(
+	name string,
+) (
+	IdLessCategory,
+	error,
+) {
+	if name == "" {
+		return IdLessCategory{}, ErrBlankNewCategoryName
+	}
+
+	return IdLessCategory{
+		Name:              name,
+		AvailableForSpend: decimal.Zero,
+	}, nil
 }
