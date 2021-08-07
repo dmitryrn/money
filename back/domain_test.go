@@ -1,9 +1,10 @@
 package main
 
 import (
+	"testing"
+
 	"github.com/shopspring/decimal"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestService_NewTx(t *testing.T) {

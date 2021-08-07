@@ -142,17 +142,13 @@ func (s *Service) NewAccount(
 		Balance: balance,
 	}
 
-	availableForBudgetingCategory.AvailableForSpend = availableForBudgetingCategory.AvailableForSpend.Add(balance)
+	availableForBudgetingCategory.AvailableForSpend = availableForBudgetingCategory.
+		AvailableForSpend.Add(balance)
 
 	return account, availableForBudgetingCategory, nil
 }
 
-func (s *Service) NewCategory(
-	name string,
-) (
-	IdLessCategory,
-	error,
-) {
+func (s *Service) NewCategory(name string) (IdLessCategory, error) {
 	if name == "" {
 		return IdLessCategory{}, ErrBlankNewCategoryName
 	}
