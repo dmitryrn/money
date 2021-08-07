@@ -1,8 +1,8 @@
-package main
+package internal
 
 import (
 	context "context"
-	"github.com/dmitryrn/money/proto"
+	"github.com/dmitryrn/money/internal/proto"
 )
 
 type Server struct {

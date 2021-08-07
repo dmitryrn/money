@@ -1,2 +1,4 @@
 .idea
 .vscode
+internal/proto
+web/proto

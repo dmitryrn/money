@@ -3,7 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/dmitryrn/money/proto"
+	"github.com/dmitryrn/money/internal"
+	"github.com/dmitryrn/money/internal/proto"
 	"github.com/go-chi/chi"
 	chiMiddleware "github.com/go-chi/chi/middleware"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
@@ -52,7 +53,7 @@ func NewGrpcWebMiddleware(grpcWeb *grpcweb.WrappedGrpcServer) *GrpcWebMiddleware
 
 func main() {
 	grpcServer := grpc.NewServer()
-	hackernewsService := Server{}
+	hackernewsService := internal.Server{}
 	proto.RegisterBudgetingAppServer(grpcServer, hackernewsService)
 
 	wrappedGrpc := grpcweb.WrapServer(grpcServer, grpcweb.WithOriginFunc(func(origin string) bool {
