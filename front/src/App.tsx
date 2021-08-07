@@ -1,8 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import logo from './logo.svg';
-import './App.css';
+import {BudgetingAppClient} from "./proto/base_pb_service";
+import {GetAccountsRequest} from "./proto/base_pb";
+
+const client = new BudgetingAppClient("http://localhost:3001", {
+  debug: true,
+})
 
 function App() {
+  useEffect(() => {
+    client.getAccounts(new GetAccountsRequest(), (e, resp) => {
+      if (e) {
+        console.log("error getting accounts", e)
+        return
+      }
+      if (!resp) {
+        console.log("resp is undefined")
+        return
+      }
+
+      console.log(resp.getAccountsList())
+    })
+  })
+
   return (
     <div className="App">
       <header className="App-header">
