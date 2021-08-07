@@ -70,6 +70,8 @@ func main() {
 
 	router.Get("/article-proxy", Article)
 
+	fmt.Println("Server is going to start on port 3001")
+
 	if err := http.ListenAndServe(":3001", router); err != nil {
 		grpclog.Fatalf("failed starting http2 server: %v", err)
 	}
